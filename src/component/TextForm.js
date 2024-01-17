@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 
 export default function TextForm(props) {
 
+    const [text, setText] = useState('');
+
     const handleUpClick = () => {
         let newText = text.toUpperCase();
         setText(newText);
@@ -24,25 +26,25 @@ export default function TextForm(props) {
         setText(event.target.value);
     }
 
+    const copyToClipboard = () => {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
 
-    // handleAllCheckboxChange = () => {
-    //     const { allChecked, items } = this.state;
-    //     const updatedItems = items.map((item) => ({ ...item, checked: !allChecked }));
-    //     this.setState({ items: updatedItems, allChecked: !allChecked });
-    // };
+        props.showAlert("Text copied to clipboard", "success");
+    }
 
-    // handleCheckboxChange = (itemId) => {
-    //     const { items } = this.state;
-    //     const updatedItems = items.map((item) =>
-    //         item.id === itemId ? { ...item, checked: !item.checked } : item
-    //     );
-    //     this.setState({ items: updatedItems, allChecked: updatedItems.every((item) => item.checked) });
-    // };
+    const handleExtraSpaces = () => {
+        let newText = text.split(/[ ]+/);
+        setText(newText.join(" "))
 
+        props.showAlert("Remove Extra Spaces", "success");
 
-    //     const { items, allChecked } = this.state;
+    }
 
-    const [text, setText] = useState('');
     return (
         <>
             <div style={{ color: props.mode === 'dark' ? 'white' : 'black' }}>
@@ -56,6 +58,9 @@ export default function TextForm(props) {
                 <button className='btn btn-primary m-2' onClick={handleUpClick}>Convert To Uppercase</button>
                 <button className='btn btn-primary m-2' onClick={handleLoClick}>Convert To Lowercase</button>
                 <button className='btn btn-primary m-2' onClick={clearScreen}>clear text</button>
+                <button className='btn btn-primary m-2' onClick={copyToClipboard}>Copy to Clipboard</button>
+                <button className='btn btn-primary m-2' onClick={handleExtraSpaces}>Remove Extra Spaces</button>
+
             </div>
             <div className="container my-3" style={{ color: props.mode === 'dark' ? 'white' : 'black' }}>
                 <h3>Your text summery</h3>
@@ -64,9 +69,6 @@ export default function TextForm(props) {
                 <h3>Preview</h3>
                 <p>{text.length > 0 ? text : "Nothing to preview!"}</p>
             </div>
-
-
-
         </>
     )
 }
