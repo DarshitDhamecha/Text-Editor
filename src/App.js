@@ -41,13 +41,9 @@ function App() {
         <Navbar title="Logo" mode={mode} toggelMode={toggelMode} />
         <Alert alert={alert} />
         <div className="container my-3">
-
-          {/* <TextForm hedding="Entainer The Text" mode={mode} />
-          <About /> */}
-
           {/* router is start */}
           <Routes>
-            <Route path='/' element={<TextForm showAlert={showAlert} hedding="Entainer The Text" mode={mode} />} />
+            <Route path='/' element={<TextForm showAlert={showAlert} hedding="Enter The Text" mode={mode} />} />
             <Route path='/About' element={<About mode={mode} />} />
           </Routes>
           {/* router is over */}
